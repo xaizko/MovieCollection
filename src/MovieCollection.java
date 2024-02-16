@@ -169,7 +169,7 @@ public class MovieCollection {
         System.out.println();
 
         for (Movie movieIn : temp2) {
-            if (movieIn.getCast().contains(temp.get(actorNum-1)) && str.indexOf(movieIn.getTitle()) != 1) {
+            if (movieIn.getCast().contains(temp.get(actorNum-1)) && !str.contains(movieIn.getTitle())) {
                 str += count2 + ". " + movieIn.getTitle() + "\n";
                 count2++;
             }
