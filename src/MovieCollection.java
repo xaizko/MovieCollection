@@ -25,6 +25,19 @@ public class MovieCollection {
         }
     }
 
+    public void insertionSortWordList2(ArrayList<Movie> movies) {
+        for (int i = 1; i < movies.size(); i++) {
+            int idx = i-1;
+            String temp = movies.get(i).getTitle();
+            Movie temp2 = movies.get(i);
+            while (idx >= 0 && movies.get(idx).getTitle().compareTo(temp) > 0) {
+                movies.set(idx+1, movies.get(idx));
+                idx--;
+            }
+            movies.set(idx +1, temp2);
+        }
+    }
+
     private void readData() {
         ArrayList<String> movie = new ArrayList<>();
         try {
@@ -64,7 +77,7 @@ public class MovieCollection {
             if (menuOption.equals("t")) {
                 searchTitles();
             } else if (menuOption.equals("c")) {
-                //searchCast();
+                searchCast();
             } else if (menuOption.equals("q")) {
                 System.out.println("Goodbye!");
             } else {
@@ -78,16 +91,72 @@ public class MovieCollection {
         System.out.print("Enter a title search term: ");
         String searchMovie = scanner.nextLine();
         ArrayList<String> temp = new ArrayList<>();
+        ArrayList<Movie> temp2 = new ArrayList<>();
         int count = 1;
         for (Movie name : collection) {
             if (name.getTitle().toLowerCase().contains(searchMovie.toLowerCase())) {
                 temp.add(name.getTitle());
+                temp2.add(name);
             }
         }
         insertionSortWordList(temp);
-        for (String name : temp) {
-            System.out.println( count + ". " + name);
-            count++;
+        insertionSortWordList2(temp2);
+        if (temp.size() == 0) {
+            System.out.println("No movie titles match that search term!");
+        } else {
+            for (String name : temp) {
+                System.out.println(count + ". " + name);
+                count++;
+            }
+        }
+
+        //movie info
+        System.out.println("Which movie would you like to learn more about?");
+        System.out.print("Enter number: ");
+        int movieNum = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println();
+
+        //print info
+        System.out.println("Title: " + temp2.get(movieNum-1).getTitle());
+        System.out.println("Runtime: " + temp2.get(movieNum-1).getRuntime());
+        System.out.println("Directed by: " + temp2.get(movieNum-1).getDirector());
+        System.out.println("Cast: " + temp2.get(movieNum-1).getCast());
+        System.out.println("Overview: " + temp2.get(movieNum-1).getOverview());
+        System.out.println("User rating: " + temp2.get(movieNum-1).getRating());
+    }
+
+    public void searchCast() {
+        System.out.print("Enter a person to search for (first or last name): ");
+        String searchCast = scanner.nextLine();
+        ArrayList<String> temp = new ArrayList<>();
+        ArrayList<Movie> temp2 = new ArrayList<>();
+        int count = 1;
+        for (Movie name : collection) {
+            String[] splitData = name.getCast().split("\\|");
+            for (int i = 0; i < splitData.length; i++) {
+                if (splitData[i].toLowerCase().contains(searchCast.toLowerCase())) {
+                    for (String name2 : temp) {
+                        if (!name2.equals(splitData[i])) {
+                            temp.add(splitData[i]);
+                            temp2.add(name);
+                        }
+                    }
+                }
+            }
+        }
+        //sort
+        insertionSortWordList(temp);
+        insertionSortWordList2(temp2);
+
+        //dislpay size
+        if (temp.size() == 0) {
+            System.out.println("No actors match that search term!");
+        } else {
+            for (String name : temp) {
+                System.out.println(count + ". " + name);
+                count++;
+            }
         }
     }
 
