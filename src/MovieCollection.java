@@ -1,8 +1,10 @@
 import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
 import java.io.IOException;
+import java.util.Set;
 
 
 public class MovieCollection {
@@ -132,20 +134,21 @@ public class MovieCollection {
         ArrayList<String> temp = new ArrayList<>();
         ArrayList<Movie> temp2 = new ArrayList<>();
         int count = 1;
+        int count2 = 1;
+        String str = "";
         for (Movie name : collection) {
             String[] splitData = name.getCast().split("\\|");
             for (int i = 0; i < splitData.length; i++) {
                 if (splitData[i].toLowerCase().contains(searchCast.toLowerCase())) {
-                    for (String name2 : temp) {
-                        if (!name2.equals(splitData[i])) {
-                            temp.add(splitData[i]);
-                            temp2.add(name);
-                        }
-                    }
+                    temp.add(splitData[i]);
+                    temp2.add(name);
                 }
             }
         }
         //sort
+        Set<String> set = new HashSet<>(temp);
+        temp.clear();
+        temp.addAll(set);
         insertionSortWordList(temp);
         insertionSortWordList2(temp2);
 
@@ -158,6 +161,20 @@ public class MovieCollection {
                 count++;
             }
         }
+
+        System.out.println("Which actor would you like to see the movies for?");
+        System.out.print("Enter number: ");
+        int actorNum = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println();
+
+        for (Movie movieIn : temp2) {
+            if (movieIn.getCast().contains(temp.get(actorNum-1)) && str.indexOf(movieIn.getTitle()) != 1) {
+                str += count2 + ". " + movieIn.getTitle() + "\n";
+                count2++;
+            }
+        }
+        System.out.println(str);
     }
 
 
