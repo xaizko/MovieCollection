@@ -162,12 +162,14 @@ public class MovieCollection {
             }
         }
 
+        //get actor
         System.out.println("Which actor would you like to see the movies for?");
         System.out.print("Enter number: ");
         int actorNum = scanner.nextInt();
         scanner.nextLine();
         System.out.println();
 
+        //print movies they are in
         for (Movie movieIn : temp2) {
             if (movieIn.getCast().contains(temp.get(actorNum-1)) && !str.contains(movieIn.getTitle())) {
                 str += count2 + ". " + movieIn.getTitle() + "\n";
@@ -175,6 +177,8 @@ public class MovieCollection {
             }
         }
         System.out.println(str);
+
+        //provide info for list of provided movie
     }
 
 
