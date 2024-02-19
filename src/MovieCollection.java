@@ -179,7 +179,9 @@ public class MovieCollection {
             System.out.print("Enter number: ");
             int movieNumber = scanner.nextInt();
             scanner.nextLine();
-            String selectedMovieTitle = str.split("\n")[movieNumber - 1].split("\\. ")[1].trim();
+            String[] movieInfo = str.split("\n")[movieNumber - 1].split("\\. ", 2);
+            String selectedMovieTitle = movieInfo[movieInfo.length - 1].trim();
+
 
             for (Movie soMuchWork: collection) {
                 if (soMuchWork.getTitle().equals(selectedMovieTitle)) {
