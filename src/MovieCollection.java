@@ -1,10 +1,7 @@
 import java.io.File;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Scanner;
+import java.util.*;
 import java.io.IOException;
-import java.util.Set;
 
 
 public class MovieCollection {
@@ -160,25 +157,42 @@ public class MovieCollection {
                 System.out.println(count + ". " + name);
                 count++;
             }
-        }
 
-        //get actor
-        System.out.println("Which actor would you like to see the movies for?");
-        System.out.print("Enter number: ");
-        int actorNum = scanner.nextInt();
-        scanner.nextLine();
-        System.out.println();
+            //get actor
+            System.out.println("Which actor would you like to see the movies for?");
+            System.out.print("Enter number: ");
+            int actorNum = scanner.nextInt();
+            scanner.nextLine();
+            System.out.println();
 
-        //print movies they are in
-        for (Movie movieIn : temp2) {
-            if (movieIn.getCast().contains(temp.get(actorNum-1)) && !str.contains(movieIn.getTitle())) {
-                str += count2 + ". " + movieIn.getTitle() + "\n";
-                count2++;
+            //print movies they are in
+            for (Movie movieIn : temp2) {
+                if (movieIn.getCast().contains(temp.get(actorNum-1)) && !str.contains(movieIn.getTitle())) {
+                    str += count2 + ". " + movieIn.getTitle() + "\n";
+                    count2++;
+                }
+            }
+            System.out.println(str);
+
+            //provide info for list of provided movie
+            System.out.println("Which movie would you like to learn about?");
+            System.out.print("Enter number: ");
+            int movieNumber = scanner.nextInt();
+            scanner.nextLine();
+            String selectedMovieTitle = str.split("\n")[movieNumber - 1].split("\\. ")[1].trim();
+
+            for (Movie soMuchWork: collection) {
+                if (soMuchWork.getTitle().equals(selectedMovieTitle)) {
+                    System.out.println("Title: " + soMuchWork.getTitle());
+                    System.out.println("Runtime: " + soMuchWork.getRuntime());
+                    System.out.println("Directed by: " + soMuchWork.getDirector());
+                    System.out.println("Cast: " + soMuchWork.getCast());
+                    System.out.println("Overview: " + soMuchWork.getOverview());
+                    System.out.println("User rating: " + soMuchWork.getRating());
+                    break;
+                }
             }
         }
-        System.out.println(str);
-
-        //provide info for list of provided movie
     }
 
 
